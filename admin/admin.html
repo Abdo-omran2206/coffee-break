@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Break | Admin Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="../coffee-icon.svg">
+    <link rel="stylesheet" href="root.css">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/products.css">
+    <link rel="stylesheet" href="style/orders.css">
+    <link rel="stylesheet" href="style/customers.css">
+    <link rel="stylesheet" href="style/analytics.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="app" class="light-mode">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>Coffee Break</h2>
+                <p>Admin Dashboard</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+                        <a href="#dashboard">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="orders()" href="#orders">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span>Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="products()" href="#products">
+                            <i class="fas fa-coffee"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="customers()" href="#customers">
+                            <i class="fas fa-users"></i>
+                            <span>Customers</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="analytics()" href="#analytics">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button onclick="themeToggle()" class="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="sun">☀️</span>
+                    <span class="moon">🌙</span>
+                </button>
+            </div>
+        </aside>
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Admin Header -->
+            <header class="admin-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="admin-search">
+                        <input type="text" placeholder="Search...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="admin-profile">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Admin Profile">
+                        <span>Admin User</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="admin-content">
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: #FCDEC0;">
+                            <i class="fas fa-shopping-bag" style="color: #B85C38;"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Today's Orders</h3>
+                            <p id="Today-Orders">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: #E5B299;">
+                            <i class="fas fa-coffee" style="color: #5C4033;"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Products</h3>
+                            <p id="Products">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: #B4846C;">
+                            <i class="fas fa-users" style="color: #FDF6EC;"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Customers</h3>
+                            <p id="Customers">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: #7D5A50;">
+                            <i class="fas fa-dollar-sign" style="color: #FDF6EC;"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Revenue</h3>
+                            <p id="Revenue">$0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Recent Orders</h2>
+                        <a onclick="orders()" href="#orders" class="btn outline">View All</a>
+                    </div>
+                    <div class="table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Items</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customer">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Popular Products -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Popular Products</h2>
+                        <a href="" class="btn outline">Manage Products</a>
+                    </div>
+                    <div class="products-grid">
+                        <div class="product-card">
+                            <div class="product-info">
+                                <h3>Classic Espresso</h3>
+                                <p>24 orders this week</p>
+                                <div class="product-meta">
+                                    <span>$3.50</span>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-info">
+                                <h3>Caramel Latte</h3>
+                                <p>18 orders this week</p>
+                                <div class="product-meta">
+                                    <span>$4.75</span>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-info">
+                                <h3>Classic Cold Brew</h3>
+                                <p>15 orders this week</p>
+                                <div class="product-meta">
+                                    <span>$4.50</span>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-info">
+                                <h3>Butter Croissant</h3>
+                                <p>12 orders this week</p>
+                                <div class="product-meta">
+                                    <span>$3.25</span>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="admin.js"></script>
+    <script src="js/togglethem.js"></script>
+    <script src="js/fa-eye.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/orders.js"></script>
+    <script src="js/customers.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

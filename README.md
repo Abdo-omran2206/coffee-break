@@ -76,7 +76,7 @@ coffee/
 │   ├── 📁 css/                  # Order-specific styles
 │   ├── 📁 js/                   # Order JavaScript modules
 │   └── 📁 php/                   # Database files
-│       └── drinks.csv           # Product catalog
+│       └── get-drinks           # get drinks from db
 ├── 📁 admin/                     # Admin dashboard
 │   ├── admin.html               # Admin interface
 │   ├── admin.js                 # Admin functionality
